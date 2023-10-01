@@ -98,6 +98,25 @@ namespace ApacheConfigGenerator.Features.GenerateApacheConfiguration
             }
         }
 
+        public static void GetCommandToEnableVHostsForEachEnvironment(string path)
+        {
+            foreach (var environment in environments)
+            {
+                string a2ensiteCommand = string.Empty;
+
+                foreach (var website in websites)
+                {
+                    string configFileName = website.WebsiteUrl.Replace('.', '-');
+                    var websiteUrl = GetWebsiteUrl(website, environment);
+
+                    a2ensiteCommand += $"sudo a2ensite {environment}-{configFileName}.conf \n";
+                }
+
+                using var writer = new StreamWriter(Path.Combine(path, $"a2ensite_{environment}.txt"));
+                writer.Write(a2ensiteCommand);
+            }
+        }
+
         public string GetStrategyName()
         {
             return nameof(_strategy);

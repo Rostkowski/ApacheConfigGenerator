@@ -48,5 +48,7 @@ foreach (var environment in GenerateApacheConfiguration.environments)
 
         using var writer = new StreamWriter(Path.Combine(vhostsFolderPath, $"{environment}-{configFileName}.conf"));
         writer.Write(config);
+
+        GenerateApacheConfiguration.GetCommandToEnableVHostsForEachEnvironment(rootDirectory);
     }
 }
