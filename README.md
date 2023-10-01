@@ -8,7 +8,12 @@ The script assumes that you have three environments your website is running on
 - devtest - QA development environment
 - hotfix - QA environment used for urgent fixes.
 
-You can modify it but be aware that this might require you to rewrite parts of the script.
+with three types of websites
+- regular - regular website listening on port 80 and 443 with ssl.
+- redirection - vhosts that redirects to given url
+- landing pages - vhosts with the root folder of /LandingPages
+
+You can modify these but be aware that this might require you to rewrite parts of the script.
 
 We have three basic strategies for script generation:
 - Regular configuration strategy holds basic configuration for vhost that listents both on port 80 and 433. Port 80 redirects to the 443.
