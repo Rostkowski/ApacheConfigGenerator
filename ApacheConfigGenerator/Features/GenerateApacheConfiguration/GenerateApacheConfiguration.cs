@@ -76,19 +76,23 @@ namespace ApacheConfigGenerator.Features.GenerateApacheConfiguration
             return websiteObject;
         }
 
-        public void GetCommandToGenerateLetsEncryptCertificateForEachEnvironment(string path)
+        public static void GetCommandToGenerateLetsEncryptCertificateForEachEnvironment(string path)
         {
             foreach (var environment in environments)
             {
-                string letsEncryptCertificationCommand = $"sudo certbot certonly --cert-name {environment}";
+                string letsEncryptCertificationCommand = $"sudo certbot certonly --cert-name {environment} -d ";
 
                 foreach (var website in websites)
                 {
-                    letsEncryptCertificationCommand += $" {GetWebsiteUrl(website, environment)}";
+                    letsEncryptCertificationCommand += $"{GetWebsiteUrl(website, environment)},";
+                    if (environment == nameof(WebsiteEnvironment.production))
+                    {
+                        letsEncryptCertificationCommand += $"www.{GetWebsiteUrl(website, environment)},";
+                    }
                 }
 
                 using var writer = new StreamWriter(Path.Combine(path, $"lets_encrypt_{environment}.txt"));
-                writer.Write(letsEncryptCertificationCommand);
+                writer.Write(letsEncryptCertificationCommand[..^1]);
             }
         }
 

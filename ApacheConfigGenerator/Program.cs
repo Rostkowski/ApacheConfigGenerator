@@ -11,7 +11,7 @@ string rootDirectory = AppDomain.CurrentDomain.BaseDirectory;
 if (shouldUseCertGenerationMode)
 {
     configGenerator.SetStrategy(new CertificateGenerationConfigurationStrategy());
-    configGenerator.GetCommandToGenerateLetsEncryptCertificateForEachEnvironment(rootDirectory);
+    GenerateApacheConfiguration.GetCommandToGenerateLetsEncryptCertificateForEachEnvironment(rootDirectory);
 }
 
 foreach (var environment in GenerateApacheConfiguration.environments)
