@@ -84,10 +84,12 @@ namespace ApacheConfigGenerator.Features.GenerateApacheConfiguration
 
                 foreach (var website in websites)
                 {
-                    letsEncryptCertificationCommand += $"{GetWebsiteUrl(website, environment)},";
+                    var websiteUrl = GetWebsiteUrl(website, environment);
+
+                    letsEncryptCertificationCommand += $"{websiteUrl},";
                     if (environment == nameof(WebsiteEnvironment.production))
                     {
-                        letsEncryptCertificationCommand += $"www.{GetWebsiteUrl(website, environment)},";
+                        letsEncryptCertificationCommand += $"www.{websiteUrl},";
                     }
                 }
 
