@@ -15,4 +15,7 @@ We have three basic strategies for script generation:
 - Redirection strategy creates a vhost that will redirect every request to the domain to the url specified by you - activate by adding ShouldRedirect: true and RedirectUrl to the Website object.
 - Certificate generation strategy allows you to kickstart a vhost listening on both port 80 and 443 without the need to point to certificate file. This is not recommended for production as it will break your website. It might be used for Let's Encrypt HTTP challenge though DNS challenge is recommended. You can activate this mode by passing --generate-certs in command line.
 
-The configuration files will be find in the root directory relative for the execution of the script inside of (ex. hotfix/vhosts)
+Publish the script and from command line type 
+```./ApacheConfigGenerator.exe```
+
+The configuration files will be find in the root directory relative for the execution of the script inside of (ex. hotfix/vhosts).
