@@ -23,7 +23,7 @@ namespace ApacheConfigGenerator.Strategies
             
     ServerSignature Off
     RewriteEngine On
-    DocumentRoot /var/www/html/{website.FolderName}
+    DocumentRoot /var/www/html/{website.DirectoryPath}
     SSLEngine On
     SSLCertificateFile /etc/letsencrypt/live/{environment}/fullchain.pem
     SSLCertificateKeyFile /etc/letsencrypt/live/{environment}/privkey.pem

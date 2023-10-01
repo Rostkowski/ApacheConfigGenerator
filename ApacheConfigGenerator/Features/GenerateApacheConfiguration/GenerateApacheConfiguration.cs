@@ -2,6 +2,7 @@
 using ApacheConfigGenerator.Interfaces;
 using ApacheConfigGenerator.Models;
 using ApacheConfigGenerator.Strategies;
+using System.Text.Json;
 
 namespace ApacheConfigGenerator.Features.GenerateApacheConfiguration
 {
@@ -15,34 +16,20 @@ namespace ApacheConfigGenerator.Features.GenerateApacheConfiguration
             nameof(WebsiteEnvironment.hotfix)
         };
 
-        private static readonly List<Website> regularWebsites = new()
-        {
-            new Website("regular.rostkowski.uk", "offer-creator"),
-        };
-
-        private static readonly List<Website> redirections = new()
-        {
-            new Website("redirection.rostkowski.uk", "offer-creator", shouldRedirect: true, redirectUrl: "https://github.com/Rostkowski"),
-        };
-
-        private static readonly List<Website> landingPages = new()
-        {
-            new Website("landingpage.rostkowski.uk", "lp-DEMO", isLandingPage: true),
-        };
-
-        public static List<Website> websites = landingPages
-            .Concat(regularWebsites)
-            .Concat(redirections)
-            .ToList();
+        public List<Website> Websites { get; set; }
 
         private IApacheConfigurationStrategy _strategy = new RegularConfigurationStrategy();
 
         public GenerateApacheConfiguration()
         {
+            using StreamReader reader = new("config.json");
+            Websites = JsonSerializer.Deserialize<List<Website>>(reader?.ReadToEnd());
         }
 
         public GenerateApacheConfiguration(IApacheConfigurationStrategy strategy)
         {
+            using StreamReader reader = new("config.json");
+            Websites = JsonSerializer.Deserialize<List<Website>>(reader?.ReadToEnd());
             _strategy = strategy;
         }
 
@@ -76,13 +63,13 @@ namespace ApacheConfigGenerator.Features.GenerateApacheConfiguration
             return websiteObject;
         }
 
-        public static void GetCommandToGenerateLetsEncryptCertificateForEachEnvironment(string path)
+        public void GetCommandToGenerateLetsEncryptCertificateForEachEnvironment(string path)
         {
             foreach (var environment in environments)
             {
                 string letsEncryptCertificationCommand = $"sudo certbot certonly --cert-name {environment} -d ";
 
-                foreach (var website in websites)
+                foreach (var website in this.Websites)
                 {
                     var websiteUrl = GetWebsiteUrl(website, environment);
 
@@ -98,13 +85,13 @@ namespace ApacheConfigGenerator.Features.GenerateApacheConfiguration
             }
         }
 
-        public static void GetCommandToEnableVHostsForEachEnvironment(string path)
+        public void GetCommandToEnableVHostsForEachEnvironment(string path)
         {
             foreach (var environment in environments)
             {
                 string a2ensiteCommand = string.Empty;
 
-                foreach (var website in websites)
+                foreach (var website in this.Websites)
                 {
                     string configFileName = website.WebsiteUrl.Replace('.', '-');
                     var websiteUrl = GetWebsiteUrl(website, environment);

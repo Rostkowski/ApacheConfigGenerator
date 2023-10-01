@@ -1,0 +1,17 @@
+[
+  {
+    "WebsiteUrl": "regular.rostkowski.uk",
+    "DirectoryPath": "offer-creator"
+  },
+  {
+    "WebsiteUrl": "redirection.rostkowski.uk",
+    "DirectoryPath": "offer-creator",
+    "ShouldRedirect": true,
+    "RedirectUrl": "https://github.com/Rostkowski"
+  },
+  {
+    "WebsiteUrl": "landingpage.rostkowski.uk",
+    "DirectoryPath": "LandingPages/lp-DEMO",
+    "IsLandingPage":  true
+  }
+]

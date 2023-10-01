@@ -11,7 +11,7 @@ string rootDirectory = AppDomain.CurrentDomain.BaseDirectory;
 if (shouldUseCertGenerationMode)
 {
     configGenerator.SetStrategy(new CertificateGenerationConfigurationStrategy());
-    GenerateApacheConfiguration.GetCommandToGenerateLetsEncryptCertificateForEachEnvironment(rootDirectory);
+    configGenerator.GetCommandToGenerateLetsEncryptCertificateForEachEnvironment(rootDirectory);
 }
 
 foreach (var environment in GenerateApacheConfiguration.environments)
@@ -29,7 +29,7 @@ foreach (var environment in GenerateApacheConfiguration.environments)
         Directory.CreateDirectory(vhostsFolderPath);
     }
 
-    foreach (var website in GenerateApacheConfiguration.websites)
+    foreach (var website in configGenerator.Websites)
     {
         if ((website.ShouldRedirect || website.IsLandingPage) && environment != nameof(WebsiteEnvironment.production)) continue;
 
@@ -49,6 +49,6 @@ foreach (var environment in GenerateApacheConfiguration.environments)
         using var writer = new StreamWriter(Path.Combine(vhostsFolderPath, $"{environment}-{configFileName}.conf"));
         writer.Write(config);
 
-        GenerateApacheConfiguration.GetCommandToEnableVHostsForEachEnvironment(rootDirectory);
+        configGenerator.GetCommandToEnableVHostsForEachEnvironment(rootDirectory);
     }
 }
