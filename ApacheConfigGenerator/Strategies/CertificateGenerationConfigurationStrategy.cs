@@ -13,7 +13,7 @@ namespace ApacheConfigGenerator.Strategies
             
     ServerSignature Off
     SSLEngine Off
-    #DocumentRoot /var/www/html/{website.FolderName}
+    DocumentRoot /var/www/html/{website.FolderName}
 </VirtualHost>
 
 <VirtualHost *:443>

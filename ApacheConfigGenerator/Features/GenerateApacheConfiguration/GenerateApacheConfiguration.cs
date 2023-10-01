@@ -28,6 +28,7 @@ namespace ApacheConfigGenerator.Features.GenerateApacheConfiguration
             {
                 websiteObject.WebsiteUrl = string.Concat(environment, '.', websiteObject.WebsiteUrl);
             }
+            Console.WriteLine($"Generating config file for {websiteObject.WebsiteUrl}");
 
             return _strategy.GenerateConfigurationFile(websiteObject, environment);
         }
