@@ -24,4 +24,4 @@ We have three basic strategies for script generation:
 Publish the script and run it from command line type 
 ```./ApacheConfigGenerator.exe```
 
-The configuration files will be find in the root directory relative for the execution of the script inside of (ex. hotfix/vhosts).
+The configuration files will be located in the root directory relative for the execution of the script inside of environment folder (ex. hotfix/vhosts).
