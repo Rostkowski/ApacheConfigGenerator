@@ -71,6 +71,8 @@ namespace ApacheConfigGenerator.Features.GenerateApacheConfiguration
 
                 foreach (var website in this.Websites)
                 {
+                    if ((website.IsLandingPage || website.ShouldRedirect) && environment != nameof(WebsiteEnvironment.production)) continue;
+
                     var websiteUrl = GetWebsiteUrl(website, environment);
 
                     letsEncryptCertificationCommand += $"{websiteUrl},";
@@ -93,6 +95,8 @@ namespace ApacheConfigGenerator.Features.GenerateApacheConfiguration
 
                 foreach (var website in this.Websites)
                 {
+                    if ((website.IsLandingPage || website.ShouldRedirect) && environment != nameof(WebsiteEnvironment.production)) continue;
+
                     string configFileName = website.WebsiteUrl.Replace('.', '-');
                     var websiteUrl = GetWebsiteUrl(website, environment);
 
